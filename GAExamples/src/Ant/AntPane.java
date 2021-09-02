@@ -204,7 +204,7 @@ public class AntPane extends Pane
     			}
 	        	//run full life
     			
-	    		GA.Move(getWidth(), getHeight());
+	    		GA.Move(500, 500);
 	    		populationText.setText("MutationR: " + GA.mutationRate + "   Population: " + GA.getPopulation().length + "  Step: " + GA.step + "    Generation: " + GA.Evolution);
     			
 

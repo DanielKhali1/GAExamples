@@ -3,6 +3,10 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
+
+import java.util.Arrays;
+
+import Color.StringMatchingGA;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -16,7 +20,7 @@ public class ColorMatchingPane extends Pane
 	
 	
 	GridPane grid = new GridPane();
-	realNumberGA ga = new realNumberGA(500, 0.01, 16777215);
+	StringMatchingGA ga = new StringMatchingGA(500, 0.01, "ffffff", true);
 	ColorPicker colorPicker = new ColorPicker();
 	TextField mut = new TextField(ga.mutationRate + "");
 	
@@ -32,15 +36,16 @@ public class ColorMatchingPane extends Pane
 			{
 				Button tempbut = new Button(" ");
 				tempbut.setPrefSize(8, 5);
-				int rand = ga.population[index];
-				String hexVal = Integer.toHexString(rand);
+				
+				String hexVal = ga.population[index];
 				while(hexVal.length() < 6)
 				{
 					hexVal += "0";
 				}
 				tempbut.setStyle("-fx-background-color: '#"+ hexVal + "'; -fx-background-radius: 0");
-				grid.add(tempbut, i, j);
 				index ++;
+				
+				grid.add(tempbut, i, j);
 			}
 		}
 		getChildren().add(grid);
@@ -101,21 +106,19 @@ public class ColorMatchingPane extends Pane
 	public void reset()
 	{
 		
-		System.out.println( (Integer.toHexString(colorPicker.getValue().hashCode())).substring(0, 6));
-		System.out.println(Integer.parseInt( (Integer.toHexString(colorPicker.getValue().hashCode()) ).substring(0, 6), 16));
-		ga = new realNumberGA(500, Double.parseDouble(mut.getText()), Integer.parseInt( (Integer.toHexString(colorPicker.getValue().hashCode()) ).substring(0, 6), 16) );
+		String value = Integer.toHexString(colorPicker.getValue().hashCode());
+		
+		if(value.equals("ff"))
+			value = "000000";
+		
+		System.out.println(value);
+		
+		ga = new StringMatchingGA(500, Double.parseDouble(mut.getText()), value, true );
 		int index = 0;
 		for(Node cell : grid.getChildren())
 		{
-			
-				int rand = ga.population[index];
-				String hexVal = Integer.toHexString(rand);
-				while(hexVal.length() < 6)
-				{
-					hexVal += "0";
-				}
-				cell.setStyle("-fx-background-color: '#"+ hexVal + "'; -fx-background-radius: 0");
-				index ++;
+			display(cell, index);
+			index ++;
 		}
 	}
 	
@@ -125,16 +128,20 @@ public class ColorMatchingPane extends Pane
 		int index = 0;
 		for(Node cell : grid.getChildren())
 		{
-			
-				int rand = ga.population[index];
-				String hexVal = Integer.toHexString(rand);
-				while(hexVal.length() < 6)
-				{
-					hexVal += "0";
-				}
-				cell.setStyle("-fx-background-color: '#"+ hexVal + "'; -fx-background-radius: 0");
-				index ++;
+			display(cell, index);
+			index ++;
 		}
+		
+		System.out.println(Arrays.toString(ga.population));
+	}
+	
+	private void display(Node cell, int index) {
+		String hexVal = ga.population[index];
+		while(hexVal.length() < 6)
+		{
+			hexVal += "0";
+		}
+		cell.setStyle("-fx-background-color: '#"+ hexVal + "'; -fx-background-radius: 0");
 	}
 
 }

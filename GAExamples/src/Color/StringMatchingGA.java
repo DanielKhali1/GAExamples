@@ -1,14 +1,20 @@
 package Color;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.*;
+
 public class StringMatchingGA 
 {
-	String[] population;
-	double mutationRate;
-	private final String alph = "abcdefghijklmnopqrstuvwxyz ";
-	String word;
-	int generation = 0;
+	public String[] population;
+	public double mutationRate;
+	private String alph;
+	public String word;
+	public int generation = 0;
 	
-	public StringMatchingGA(int populationSize, double mutationRate, String word)
+	public StringMatchingGA(int populationSize, double mutationRate, String word, boolean color)
 	{
+		this.alph = (color)? "1234567890abcdef" : "abcdefghijklmnopqrstuvwxyz ";
 		this.word = word;
 		this.mutationRate = mutationRate;
 		generatePopulation(populationSize, word.length());
@@ -99,5 +105,29 @@ public class StringMatchingGA
 		
 		return c;
 	}
+	
+//	private String best() {
+//		return Arrays.stream(population)
+//				.max(Comparator.comparing(StringMatchingGA::fitness));
+//		
+//	}
+//	
+//	class ClassifiedString implements Comparator<String>
+//	{
+//		String str;
+//		
+//		public ClassifiedString(String str) {
+//			this.str = str;
+//		}
+//
+//		@Override
+//		public int compare(String o1, String o2) {
+//			
+//			return 0;
+//		}
+//		
+//		
+//		
+//	}
 
 }

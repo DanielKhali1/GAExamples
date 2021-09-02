@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 
 public class StringMatchingPane extends Pane 
 {
-	StringMatchingGA ga = new StringMatchingGA(13, 0.03, "match me");
+	StringMatchingGA ga = new StringMatchingGA(13, 0.03, "match me", false);
 	TextField inv[] = new TextField[ga.population.length];
 	TextField fit[] = new TextField[ga.population.length];
 	TextField gen = new TextField(ga.generation + "");
@@ -62,7 +62,7 @@ public class StringMatchingPane extends Pane
 
 			for(int i = 0; i < inv.length; i++)
 			{
-				ga = new StringMatchingGA(13, Double.parseDouble(mut.getText()), word.getText());
+				ga = new StringMatchingGA(13, Double.parseDouble(mut.getText()), word.getText(), false);
 
 				
 				inv[i].setText(ga.population[i]);
